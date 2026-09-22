@@ -5,7 +5,7 @@ CREATE TABLE venues(
     city VARCHAR(100) NOT NULL,
     country VARCHAR(2) DEFAULT 'ES',
     capacity INTEGER NOT NULL,
-    backline JSONB,
+    technical_rider JSONB,
     phone VARCHAR(20),
     email VARCHAR(150),
     logo_url TEXT,
