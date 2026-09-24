@@ -2,10 +2,13 @@ import "dotenv/config";
 import express from "express";
 import { pool } from "./db.js";
 import { venuesRouter } from "./venues.routes.js";
+import cors from "cors";
 
 //Variables
 const app = express();
 const PORT = 3000;
+
+app.use(cors());
 
 app.get("/health", async (req, res) => {
   try {

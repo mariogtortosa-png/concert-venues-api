@@ -11,9 +11,9 @@ venuesRouter.get("/", async (req, res) => {
   try {
     const search = req.query.q;
 
-    const venues = search ? await getVenueSearch(search.toString()) : await getAllVenues();
-
-    /* const venues = await getAllVenues(); */
+    const venues = search
+      ? await getVenueSearch(search.toString())
+      : await getAllVenues();
     res.json(venues);
   } catch (err) {
     console.error(err);
@@ -21,6 +21,7 @@ venuesRouter.get("/", async (req, res) => {
   }
 });
 
+//Ruta para poder usar el id para mostrar una sala concreta
 venuesRouter.get("/:id", async (req, res) => {
   try {
     const venuesById = await getVenueById(req.params.id);
@@ -36,8 +37,3 @@ venuesRouter.get("/:id", async (req, res) => {
       .json({ error: "Fallo en la conexión con la base de datos" });
   }
 });
-
-/* venuesRouter.get("/:search", async (req, res) => {
-  const venuesSearch = await getVenueSearch(req.params.search);
-  return res.json(venuesSearch);
-}); */
