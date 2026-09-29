@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Venue } from "./interfaces";
+import VenueTable from "./components/VenuesTables";
+import VenueMap from "./components/VenuesMap";
 
 import "./App.css";
 
@@ -30,6 +32,7 @@ function App() {
 
   return (
     <>
+      {/* BARRA DE NAVEGACIÓN CON BUSCADOR */}
       <div className="nav-bar">
         <div className="search-bar">
           <input
@@ -40,28 +43,9 @@ function App() {
           />
         </div>
       </div>
-       <div className="venueTable">
-          <table>
-            <thead>
-              <tr>
-                <th>Nombre</th>
-                <th>Dirección</th>
-                <th>País</th>
-                <th>Aforo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {venues.map((venue) => (
-                <tr key={venue.id}>
-                  <td>{venue.name}</td>
-                  <td>{`${venue.street} - (${venue.city})`}</td>
-                  <td>{venue.country}</td>
-                  <td>{venue.capacity}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      {/* COMPONENTE PARA PINTAR LOS DATOS EN UNA TABLA */}
+      <VenueTable venues={venues} />
+      <VenueMap venues={venues} />
     </>
   );
 }

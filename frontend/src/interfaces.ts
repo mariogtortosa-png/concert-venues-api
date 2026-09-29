@@ -5,4 +5,6 @@ export interface Venue {
   city: string;
   country: string;
   capacity: number;
+  latitude: number | null;
+  longitude: number | null
 }
