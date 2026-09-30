@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Venue } from "./interfaces";
-import VenueTable from "./components/VenuesTables";
+//import VenueTable from "./components/VenuesTables";
 import VenueMap from "./components/VenuesMap";
-
 import "./App.css";
 
 function App() {
@@ -33,7 +32,25 @@ function App() {
   return (
     <>
       {/* BARRA DE NAVEGACIÓN CON BUSCADOR */}
-      <div className="nav-bar">
+      <div className="app-layout">
+        <nav className="nav-bar">
+          <div className="brand">MUSIC VENUE MAP APPLICATION</div>
+          <div className="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Tables</a>
+          </div>
+          <button className="register-btn">Registrar Sala</button>
+        </nav>
+        <main className="map-wrapper">
+          <VenueMap
+            venues={venues}
+            search={search}
+            onSearchChange={handleSearch}
+          />
+        </main>
+      </div>
+      {/* <div className="nav-bar">
         <div className="search-bar">
           <input
             type="text"
@@ -42,10 +59,10 @@ function App() {
             onChange={handleSearch}
           />
         </div>
-      </div>
+      </div> */}
+
       {/* COMPONENTE PARA PINTAR LOS DATOS EN UNA TABLA */}
-      <VenueTable venues={venues} />
-      <VenueMap venues={venues} />
+      {/* <VenueTable venues={venues} /> */}
     </>
   );
 }

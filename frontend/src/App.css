@@ -1,3 +1,64 @@
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  flex-shrink: 0;
+}
+
+.map-wrapper {
+  flex: 1;
+  position: relative;
+}
+
+.map-container {
+  position: relative;
+  height: 100%;
+}
+
+.search-bar {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  max-width: 90%;
+  z-index: 10;
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  border: 2px solid #000;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.info-card {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 350px;
+  z-index: 10;
+  background: white;
+  padding: 1.5rem;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  overflow-y: auto;
+}
+
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -24,6 +85,15 @@
   padding: 3px 10px;
 }
 
+.nav-bar {
+  margin: 10px 10px;
+}
+
+.info-card {
+  display: flex;
+  margin-left: 70%;
+}
+
 .venueTable {
   width: 80%;
   margin: 25px auto;
@@ -37,7 +107,6 @@
 .venueTable td {
   align-items: center;
   justify-content: left;
-  
 }
 
 .hero {
