@@ -5,13 +5,16 @@ import VenueMap from "./components/VenuesMap";
 import "./App.css";
 
 function App() {
+  /* USE STATES */
   const [search, setSearch] = useState("");
   const [venues, setVenues] = useState<Venue[]>([]);
 
+  /* FUNCIÓN PARA CONTROLAR LA BUSQUEDA */
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearch(e.target.value);
   }
 
+  /* USE EFFECT PARA ACTUALIZAR LAS SALAS QUE SE MUESTRAN AL BUSCAR */
   useEffect(() => {
     async function fetchVenues() {
       try {
@@ -24,17 +27,35 @@ function App() {
         console.error("Error encontrado: " + error);
       }
     }
-    fetchVenues();
-  }, [search]);
 
-  //meter un debounce para no lanzar peticiones a lo loco
+    /* ESTE IF CONTROLA QUE NO SE LANZE UNA BUSQUEDA CUANDO LA BARRA QUEDA VACÍA */
+    if (!search) {
+      fetchVenues();
+      return;
+    }
+
+    /* EL TIMEOUT CONTROLA QUE NO SE LANCEN PETICIONES EN CADA PULSACIÓN DE TECLA
+    Y SOLO LAS LANZA CUANDO PASAN 300MS */
+    const timeoutId = setTimeout(() => {
+      fetchVenues();
+    }, 400);
+
+    /* EL RETURN LIMPIA EL COMPONENTE EN CADA NUEVA PULSACIÓN DE TECLA
+    REINICIANDO EL CONTADOR DEL TIMEOUT A 0 */
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [search]);
 
   return (
     <>
       {/* BARRA DE NAVEGACIÓN CON BUSCADOR */}
       <div className="app-layout">
         <nav className="nav-bar">
-          <div className="brand">MUSIC VENUE MAP APPLICATION</div>
+          <div className="brand">
+            MUSIC VENUE MAP <br />
+            APPLICATION
+          </div>
           <div className="nav-links">
             <a href="#">Home</a>
             <a href="#">About</a>
@@ -50,16 +71,6 @@ function App() {
           />
         </main>
       </div>
-      {/* <div className="nav-bar">
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Busca salas..."
-            value={search}
-            onChange={handleSearch}
-          />
-        </div>
-      </div> */}
 
       {/* COMPONENTE PARA PINTAR LOS DATOS EN UNA TABLA */}
       {/* <VenueTable venues={venues} /> */}

@@ -5,8 +5,11 @@ export interface Venue {
   city: string;
   country: string;
   capacity: number;
-  phone: string;
-  email: string;
+  phone: string | null;
+  email: string | null;
+  logo_url: string | null;
+  conditions_pdf_url: string | null;
+  technical_rider: Record<string, unknown> | null;
   latitude: number | null;
-  longitude: number | null
+  longitude: number | null;
 }

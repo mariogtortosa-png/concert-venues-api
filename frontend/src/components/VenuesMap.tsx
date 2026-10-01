@@ -32,6 +32,8 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
 
   /*   VARIABLE PARA OCULTAR PUNTOS DE INTERÉS COMERCIAL DE GOOGLE */
   const mapOptions: google.maps.MapOptions = {
+    mapTypeControl: false,
+    disableDefaultUI: true,
     styles: [
       {
         featureType: "poi",
@@ -40,7 +42,9 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
     ],
   };
 
-  /* ICONO QUE MUESTRA EL MAPA EN CADA SALA */
+  /* VARIABLES QUE CONTROLAN EL ESTILO DEL PIN DE CADA SALA, 
+  CAMBIA SU COLOR EN FUNCIÓN DEL AFORO DE LA SALA */
+
   const markerIconSmall = {
     path: google.maps.SymbolPath.CIRCLE,
     scale: 8,
@@ -50,10 +54,26 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
     strokeWeight: 2,
   };
 
+  const markerIconMedium = {
+    path: google.maps.SymbolPath.CIRCLE,
+    scale: 8,
+    fillColor: "#cdd236",
+    fillOpacity: 1,
+    strokeColor: "#ffffff",
+    strokeWeight: 2,
+  };
   const markerIconBig = {
     path: google.maps.SymbolPath.CIRCLE,
     scale: 8,
     fillColor: "#2faa6b",
+    fillOpacity: 1,
+    strokeColor: "#ffffff",
+    strokeWeight: 2,
+  };
+  const markerIconStadium = {
+    path: google.maps.SymbolPath.CIRCLE,
+    scale: 8,
+    fillColor: "#2d81e1",
     fillOpacity: 1,
     strokeColor: "#ffffff",
     strokeWeight: 2,
@@ -65,6 +85,25 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
     (venue): venue is Venue & { latitude: number; longitude: number } =>
       venue.latitude !== null && venue.longitude !== null,
   );
+
+  const contactInfo = selectedVenue
+    ? [selectedVenue.phone, selectedVenue.email].filter(Boolean).join(" - ")
+    : "";
+
+
+    /* FUNCIÓN PARA COMPROBAR EL TAMAÑO DE SALA Y 
+    DEVOLVER UN COLOR DE PIN ACORDE */
+  function getSizeColour(venue: Venue) {
+    if (venue.capacity >= 10000) {
+      return markerIconStadium;
+    } else if (venue.capacity >= 1000) {
+      return markerIconBig;
+    } else if (venue.capacity >= 400) {
+      return markerIconMedium;
+    } else {
+      return markerIconSmall;
+    }
+  }
 
   return (
     <div className="map-container">
@@ -86,7 +125,7 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
           <MarkerF
             key={venue.id}
             position={{ lat: venue.latitude, lng: venue.longitude }}
-            icon={venue.capacity >= 1000 ? markerIconBig : markerIconSmall}
+            icon={getSizeColour(venue)}
             onClick={(e) => {
               e.domEvent.stopPropagation();
               setSelectedVenue(venue);
@@ -94,7 +133,9 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
           ></MarkerF>
         ))}
       </GoogleMap>
+
       {/*       FICHA DE INFORMACIÓN CUANDO SE CLICA UNA SALA */}
+
       {selectedVenue && (
         <div className="info-card">
           <button className="close-btn" onClick={() => setSelectedVenue(null)}>
@@ -102,12 +143,22 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
           </button>
           <h3>{selectedVenue.name}</h3>
           <p>
-            {selectedVenue.street} - ({selectedVenue.city})
+            {selectedVenue.street} <br /> ({selectedVenue.city})
           </p>
+          <p>Aforo: {selectedVenue.capacity}</p>
+
+          {contactInfo && <p> Contacto: {contactInfo}</p>}
+          {selectedVenue.conditions_pdf_url && (
+            <a href={selectedVenue.conditions_pdf_url} target="_blank">
+              Condiciones de sala
+            </a>
+          )}
         </div>
       )}
     </div>
   );
 }
-
 export default VenueMap;
+
+/* 
+const contactInfo = [selectedVenue.phone, selectedVenue.email].filter(Boolean).join(" - ") */
