@@ -2,6 +2,7 @@ import { useLoadScript, GoogleMap, MarkerF } from "@react-google-maps/api";
 import type { Venue } from "../interfaces";
 import { useState } from "react";
 import "../App.css";
+import TechnicalRider from "./TechnicalRider";
 
 interface VenueMapProps {
   venues: Venue[];
@@ -90,8 +91,7 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
     ? [selectedVenue.phone, selectedVenue.email].filter(Boolean).join(" - ")
     : "";
 
-
-    /* FUNCIÓN PARA COMPROBAR EL TAMAÑO DE SALA Y 
+  /* FUNCIÓN PARA COMPROBAR EL TAMAÑO DE SALA Y 
     DEVOLVER UN COLOR DE PIN ACORDE */
   function getSizeColour(venue: Venue) {
     if (venue.capacity >= 10000) {
@@ -141,6 +141,13 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
           <button className="close-btn" onClick={() => setSelectedVenue(null)}>
             X
           </button>
+          {selectedVenue.logo_url && (
+            <img
+              src={selectedVenue.logo_url}
+              alt={`Logo de ${selectedVenue.name}`}
+              className="venue-logo"
+            />
+          )}
           <h3>{selectedVenue.name}</h3>
           <p>
             {selectedVenue.street} <br /> ({selectedVenue.city})
@@ -148,6 +155,9 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
           <p>Aforo: {selectedVenue.capacity}</p>
 
           {contactInfo && <p> Contacto: {contactInfo}</p>}
+          {selectedVenue.technical_rider && (
+            <TechnicalRider data={selectedVenue.technical_rider}/>
+          )}
           {selectedVenue.conditions_pdf_url && (
             <a href={selectedVenue.conditions_pdf_url} target="_blank">
               Condiciones de sala
