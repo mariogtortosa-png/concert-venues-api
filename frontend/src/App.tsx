@@ -3,11 +3,14 @@ import type { Venue } from "./interfaces";
 //import VenueTable from "./components/VenuesTables";
 import VenueMap from "./components/VenuesMap";
 import "./App.css";
+import RegisterForm from "./components/RegisterForm";
 
 function App() {
   /* USE STATES */
   const [search, setSearch] = useState("");
   const [venues, setVenues] = useState<Venue[]>([]);
+  const [showForm, setShowForm] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   /* FUNCIÓN PARA CONTROLAR LA BUSQUEDA */
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
@@ -45,7 +48,7 @@ function App() {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [search]);
+  }, [search, refreshKey]);
 
   return (
     <>
@@ -61,7 +64,9 @@ function App() {
             <a href="#">About</a>
             <a href="#">Tables</a>
           </div>
-          <button className="register-btn">Registrar Sala</button>
+          <button className="register-btn" onClick={() => setShowForm(true)}>
+            Registrar Sala
+          </button>
         </nav>
         <main className="map-wrapper">
           <VenueMap
@@ -69,6 +74,12 @@ function App() {
             search={search}
             onSearchChange={handleSearch}
           />
+          {showForm && (
+            <RegisterForm
+              onClose={() => setShowForm(false)}
+              onCreated={() => setRefreshKey((k) => k + 1)}
+            />
+          )}
         </main>
       </div>
 

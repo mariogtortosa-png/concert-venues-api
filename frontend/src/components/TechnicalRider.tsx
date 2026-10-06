@@ -26,7 +26,18 @@ function RiderNode({ value }: RiderNodeProps) {
   return (
     <>
       {Object.entries(value).map(([key, m]) => (
-        <details key={key}>
+        <details
+          key={key}
+          onToggle={(e) => {
+            const el = e.currentTarget;
+            if (!el.open) {
+              el.querySelectorAll("details[open]").forEach((child) => {
+                child.removeAttribute("open");
+              });
+              
+            }
+          }}
+        >
           <summary>{key}</summary>
           <RiderNode value={m} />
         </details>
