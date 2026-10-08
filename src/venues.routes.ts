@@ -54,8 +54,8 @@ venuesRouter.post("/", async (req, res) => {
   if (!city || typeof city !== "string") {
     errors.push("La ciudad no puede estar vacía y debe ser un texto");
   }
-  if (!capacity || typeof capacity !== "number") {
-    errors.push("El aforo no puede estar vacío y debe ser un número entero");
+  if (!capacity || typeof capacity !== "number" || !Number.isInteger(capacity) || capacity <= 0) {
+    errors.push("El aforo no puede estar vacío y debe ser un número entero mayor de 0");
   }
   if (phone !== undefined && phone !== null && phone !== "") {
     if (typeof phone !== "string") {

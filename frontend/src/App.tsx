@@ -22,7 +22,7 @@ function App() {
     async function fetchVenues() {
       try {
         const response = await fetch(
-          `http://localhost:3000/venues?q=${search}`,
+          `${import.meta.env.VITE_API_URL}/venues?q=${encodeURIComponent(search)}`,
         );
         const data = await response.json();
         setVenues(data);

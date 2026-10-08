@@ -124,6 +124,9 @@ input:focus-visible {
   padding-left: 1rem;
   margin: 0.25rem 0;
 }
+.info-card img {
+  width: 300px;
+}
 
 .info-card summary {
   cursor: pointer;
@@ -164,7 +167,7 @@ input:focus-visible {
 .modal-box {
   background: white;
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: 20px 20px 20px 20px;
   width: 420px;
   max-width: 90%;
   max-height: 90vh;
@@ -224,7 +227,6 @@ input:focus-visible {
   background: #e6f4ea;
   color: #137333;
   padding: 0.6rem 0.9rem;
-  border-radius: 8px;
 }
 
 /* ---------- TABLA DE SALAS (vista alternativa) ---------- */

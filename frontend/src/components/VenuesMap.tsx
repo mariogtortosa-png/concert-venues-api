@@ -152,8 +152,7 @@ function VenueMap({ venues, search, onSearchChange }: VenueMapProps) {
           <p>
             {selectedVenue.street} <br /> ({selectedVenue.city})
           </p>
-          <p>Aforo: {selectedVenue.capacity}</p>
-
+          <p>Aforo: {selectedVenue.capacity}</p>          
           {contactInfo && <p> Contacto: {contactInfo}</p>}
           {selectedVenue.technical_rider && (
             <TechnicalRider data={selectedVenue.technical_rider}/>
